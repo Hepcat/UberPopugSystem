@@ -7,6 +7,7 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.uberpopug.entity.Account;
 import org.uberpopug.entity.Task;
+import org.uberpopug.entity.TaskStatus;
 import org.uberpopug.messaging.cud.ActionType;
 import org.uberpopug.messaging.cud.task.TaskCUDMessage;
 import org.uberpopug.resource.pojo.task.CreateTaskRequest;
@@ -30,6 +31,7 @@ public class TaskService {
         task.completionPayout = getRandomPayout();
         task.assignedTo = getRandomAccount();
         task.taskName = request.getTaskName();
+        task.status = TaskStatus.ASSIGNED;
         task.persist();
 
         TaskCUDMessage TaskCUDMessage = generateTaskCUDMessage(task, ActionType.CREATE);
@@ -59,6 +61,7 @@ public class TaskService {
         taskAction.assignCost = task.assignCost;
         taskAction.completionPayout = task.completionPayout;
         taskAction.assignedTo = task.assignedTo.guid;
+        taskAction.status = task.status;
         taskAction.actionType = action;
         return taskAction;
     }
