@@ -14,7 +14,7 @@ import org.uberpopug.messaging.cud.account.AccountCUDMessage;
 public class AccountConsumer {
 
     @Incoming("account")
-    public void consume(Event event) throws JsonProcessingException, ValidationException {
+    public void consume(Event event) throws ValidationException, JsonProcessingException {
         SchemaRegistry.validate(event);
         ObjectMapper mapper = new ObjectMapper();
         AccountCUDMessage accountCUDMessage = mapper.readValue(event.getData().toString(), AccountCUDMessage.class);
